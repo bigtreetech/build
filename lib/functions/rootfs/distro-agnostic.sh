@@ -127,7 +127,14 @@ function install_distribution_agnostic() {
 	# set root password. it is written to the log, of course. Escuse the escaping needed here.
 	display_alert "Setting root password" "" "info"
 	chroot_sdcard "(" echo "'${ROOTPWD}'" ";" echo "'${ROOTPWD}'" ";" ")" "|" passwd root
-
+	#chroot_sdcard useradd -d "${SDCARD}"/home -s "${SDCARD}"/bin/bash biqu
+	
+	##chroot_sdcard usermod -d "${SDCARD}"/home/biqu  biqu
+	##chroot_sdcard usermod -d "${SDCARD}"/home/biqu biqu 
+	#chroot_sdcard  git clone  https://github.com/dw-0/kiauh.git "${SDCARD}"/home/biqu/kiauh
+	chroot_sdcard  CRTDIR=$(pwd)
+	echo "dir =$CRTDIR----------------------------------"
+	#chroot "${SDCARD}" /bin/bash -c "git clone  https://github.com/dw-0/kiauh.git /home/biqu/kiauh"
 	# enable automated login to console(s)
 	if [[ $CONSOLE_AUTOLOGIN == yes ]]; then
 		mkdir -p "${SDCARD}"/etc/systemd/system/getty@.service.d/
@@ -248,6 +255,9 @@ function install_distribution_agnostic() {
 	date -u '+%Y-%m-%d %H:%M:%S' > "${SDCARD}"/etc/fake-hwclock.data
 
 	echo "${HOST}" > "${SDCARD}"/etc/hostname
+	
+	
+	
 
 	# set hostname in hosts file
 	cat <<- EOF > "${SDCARD}"/etc/hosts
@@ -444,7 +454,7 @@ function install_distribution_agnostic() {
 	[[ -f "${SDCARD}"/lib/systemd/system/armbian-led-state.service ]] && chroot_sdcard systemctl --no-reload enable armbian-led-state.service
 
 	# copy "first run automated config, optional user configured"
-	run_host_command_logged cp -v "${SRC}"/packages/bsp/armbian_first_run.txt.template "${SDCARD}"/boot/armbian_first_run.txt.template
+#	run_host_command_logged cp -v "${SRC}"/packages/bsp/armbian_first_run.txt.template "${SDCARD}"/boot/armbian_first_run.txt.template
 
 	# switch to beta repository at this stage if building nightly images
 	[[ $IMAGE_TYPE == nightly ]] && sed -i 's/apt/beta/' "${SDCARD}"/etc/apt/sources.list.d/armbian.list
@@ -626,8 +636,25 @@ install_rclocal() {
 		# bits.
 		#
 		# By default this script does nothing.
-
+		sudo chmod +x /boot/scripts/*
+		/boot/scripts/btt_init.sh
+		
 		exit 0
 	EOF
 	chmod +x "${SDCARD}"/etc/rc.local
 }
+
+install_btt_scripts(){
+	cp $USERPATCHES_PATH/boot/system.cfg                    $SDCARD/boot/system.cfg
+    chmod +x "${SDCARD}"/boot/system.cfg
+	sudo rm -rf $SDCARD/boot/scripts/profile
+	sudo cp -rf $USERPATCHES_PATH/boot/scripts				$SDCARD/boot/
+	sudo cp -rf $USERPATCHES_PATH/boot/scripts/profile      $SDCARD/etc
+}
+
+#install_klipper(){
+#	mkdir -p "${SDCARD}"/home/biqu/kiauh
+#	git clone  https://github.com/dw-0/kiauh.git "${SDCARD}"/home/biqu/kiauh 
+#	
+#}
+
