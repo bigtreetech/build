@@ -338,6 +338,8 @@ function prepare_partitions() {
 			-e "s/rootfstype \"ext4\"/rootfstype \"$ROOTFS_TYPE\"/" $SDCARD/boot/$bootscript_dst
 	fi
 
+	cat $USERPATCHES_PATH/boot/armbianEnv.txt >> "${SDCARD}/boot/armbianEnv.txt"
+
 	# if we have boot.ini = remove armbianEnv.txt and add UUID there if enabled
 	if [[ -f $SDCARD/boot/boot.ini ]]; then
 		display_alert "Found boot.ini" "${SDCARD}/boot/boot.ini" "debug"

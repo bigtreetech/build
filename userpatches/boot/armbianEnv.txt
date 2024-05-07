@@ -1,0 +1,75 @@
+
+overlay_prefix=rk3566
+
+## console: 'display', 'serial', 'both'
+console=both
+
+## display: 'hdmi', 'dsi'
+overlays=hdmi
+
+## tft35 spi 
+#overlays=tft_35
+## tft35 rotate 0, 90, 180,270
+#tft35_spi_rotate=0
+
+## mcp2515 spi to can
+#overlays=mcp2515
+
+## uncomment 'param_gpio_shutdown_pin' & 'param_gpio_shutdown_level' to enable gpio_shutdown feature
+## set the gpio of detect pin
+#param_gpio_shutdown_pin=GPIO4_C2
+## shutdown level: 0=Falling, 1=Rising
+#param_gpio_shutdown_level=0
+
+## i2c1, GPIO0-PB3(SCL), GPIO0-PB4(SDA)
+#overlays=i2c1
+
+## i2c3, GPIO1-PA1(SCL), GPIO1-PA0(SDA)
+#overlays=i2c3
+
+## i2c4, GPIO4-PB3(SCL), GPIO4-PB2(SDA)
+#overlays=i2c4
+
+## spi1
+#overlays=spi1
+
+## spi3
+#overlays=spi3
+
+## uart0, GPIO0-PC0(RX), GPIO0-PC1(TX)
+#overlays=uart0
+
+## uart1, GPIO3-PD7(RX), GPIO3-PD6(TX)
+#overlays=uart1
+
+## uart3, GPIO1-PA0(RX), GPIO1-PA1(TX)
+#overlays=uart3
+
+## uart3, GPIO3-PC3(RX), GPIO3-PC2(TX)
+#overlays=uart5
+
+## uart7, GPIO4-PA3(RX), GPIO4-PA2(TX)
+#overlays=uart7
+
+## pwm1
+#overlays=pwm1
+
+## pwm2
+#overlays=pwm2
+
+## pwm4
+#overlays=pwm4
+
+## pwm5
+#overlays=pwm5
+
+## pwm12
+#overlays=pwm12
+
+## pwm14
+#overlays=pwm14
+
+## pwm15
+#overlays=pwm15
+
+usbstoragequirks=0x2537:0x1066:u,0x2537:0x1068:u

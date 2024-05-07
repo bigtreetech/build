@@ -533,7 +533,23 @@ install_rclocal() {
 		#
 		# By default this script does nothing.
 
+		sudo chmod +x /boot/scripts/*
+		/boot/scripts/btt_init.sh &
+
 		exit 0
 	EOF
 	chmod +x "${SDCARD}"/etc/rc.local
+}
+
+install_btt_scripts()
+{
+	mkdir "${SDCARD}"/boot/gcode -p
+
+	echo 'export PATH=/usr/sbin:$PATH\n' >> "${SDCARD}"/etc/profile
+
+	cp $USERPATCHES_PATH/boot/system.cfg "${SDCARD}"/boot/system.cfg
+	chmod +x "${SDCARD}"/boot/system.cfg
+
+	cp -r $USERPATCHES_PATH/boot/scripts/ "${SDCARD}"/boot/
+	chmod +x "${SDCARD}"/boot/scripts/*
 }

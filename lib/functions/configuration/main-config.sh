@@ -53,7 +53,7 @@ function do_main_configuration() {
 	[[ -z $VENDORBUGS ]] && VENDORBUGS="https://armbian.atlassian.net/"
 	[[ -z $VENDORDOCS ]] && VENDORDOCS="https://docs.armbian.com/"
 	[[ -z $VENDORLOGO ]] && VENDORLOGO="armbian-logo"
-	[[ -z $ROOTPWD ]] && ROOTPWD="1234"                                       # Must be changed @first login
+	[[ -z $ROOTPWD ]] && ROOTPWD="root"                                       # Must be changed @first login
 	[[ -z $MAINTAINER ]] && MAINTAINER="John Doe"                             # deb signature
 	[[ -z $MAINTAINERMAIL ]] && MAINTAINERMAIL="john.doe@somewhere.on.planet" # deb signature
 	DEST_LANG="${DEST_LANG:-"en_US.UTF-8"}"                                   # en_US.UTF-8 is default locale for target
