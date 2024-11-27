@@ -180,20 +180,20 @@ function install_distribution_agnostic() {
 			fi
 		fi
 
-		if [[ -n $OVERLAY_PREFIX && -f "${SDCARD}"/boot/armbianEnv.txt ]]; then
-			display_alert "Adding to armbianEnv.txt" "overlay_prefix=$OVERLAY_PREFIX" "debug"
-			run_host_command_logged echo "overlay_prefix=$OVERLAY_PREFIX" ">>" "${SDCARD}"/boot/armbianEnv.txt
-		fi
+		# if [[ -n $OVERLAY_PREFIX && -f "${SDCARD}"/boot/armbianEnv.txt ]]; then
+		# 	display_alert "Adding to armbianEnv.txt" "overlay_prefix=$OVERLAY_PREFIX" "debug"
+		# 	run_host_command_logged echo "overlay_prefix=$OVERLAY_PREFIX" ">>" "${SDCARD}"/boot/armbianEnv.txt
+		# fi
 
-		if [[ -n $DEFAULT_OVERLAYS && -f "${SDCARD}"/boot/armbianEnv.txt ]]; then
-			display_alert "Adding to armbianEnv.txt" "overlays=${DEFAULT_OVERLAYS//,/ }" "debug"
-			run_host_command_logged echo "overlays=${DEFAULT_OVERLAYS//,/ }" ">>" "${SDCARD}"/boot/armbianEnv.txt
-		fi
+		# if [[ -n $DEFAULT_OVERLAYS && -f "${SDCARD}"/boot/armbianEnv.txt ]]; then
+		# 	display_alert "Adding to armbianEnv.txt" "overlays=${DEFAULT_OVERLAYS//,/ }" "debug"
+		# 	run_host_command_logged echo "overlays=${DEFAULT_OVERLAYS//,/ }" ">>" "${SDCARD}"/boot/armbianEnv.txt
+		# fi
 
-		if [[ -n $BOOT_FDT_FILE && -f "${SDCARD}"/boot/armbianEnv.txt ]]; then
-			display_alert "Adding to armbianEnv.txt" "fdtfile=${BOOT_FDT_FILE}" "debug"
-			run_host_command_logged echo "fdtfile=${BOOT_FDT_FILE}" ">>" "${SDCARD}/boot/armbianEnv.txt"
-		fi
+		# if [[ -n $BOOT_FDT_FILE && -f "${SDCARD}"/boot/armbianEnv.txt ]]; then
+		# 	display_alert "Adding to armbianEnv.txt" "fdtfile=${BOOT_FDT_FILE}" "debug"
+		# 	run_host_command_logged echo "fdtfile=${BOOT_FDT_FILE}" ">>" "${SDCARD}/boot/armbianEnv.txt"
+		# fi
 
 	fi
 
@@ -524,6 +524,10 @@ function install_distribution_agnostic() {
 	return 0 # make sure to exit with success
 }
 
+fix_etc_profile_path() {
+	sed -i 's|PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"|PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"|' "${SDCARD}"/etc/profile
+}
+
 install_rclocal() {
 	cat <<- EOF > "${SDCARD}"/etc/rc.local
 		#!/bin/sh -e
@@ -539,7 +543,17 @@ install_rclocal() {
 		#
 		# By default this script does nothing.
 
+		chmod +x /boot/scripts/*
+		/boot/scripts/btt_init.sh
+
 		exit 0
 	EOF
 	chmod +x "${SDCARD}"/etc/rc.local
+}
+
+install_btt_scripts() {
+    mkdir "${SDCARD}"/boot/gcode -p
+    cp "${SRC}"/patch/boot/system.cfg ${SDCARD}/boot/system.cfg
+    cp -r "${SRC}"/patch//boot/scripts/ ${SDCARD}/boot/
+    chmod +x "${SDCARD}"/boot/scripts/*
 }
