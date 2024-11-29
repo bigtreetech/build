@@ -61,3 +61,4 @@ ir-keytable
 vim
 bluez
 bluez-alsa-utils
+ifupdown

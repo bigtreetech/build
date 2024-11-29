@@ -78,6 +78,9 @@ function install_distribution_specific() {
 	# fix /etc/profile users path, users other than root can also run 'usr/local/sbin' command
 	fix_etc_profile_path
 
+	# canbus
+	install_can0
+
 	# rc.local is not existing but one might need it
 	install_rclocal
 
