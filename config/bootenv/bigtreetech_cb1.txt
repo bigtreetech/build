@@ -1,0 +1,131 @@
+verbosity=1
+bootlogo=false
+disp_mode=1024x600p60
+overlay_prefix=sun50i-h616
+#
+#------------------------------------------------#
+#
+## 'cb1-sd.dtb' for CB1, 'cb1-emmc.dtb' for CB1 eMMC version
+fdtfile=sun50i-h616-bigtreetech-cb1-sd.dtb
+#
+## default 'display' for debug, 'serial' for /dev/ttyS0
+console=display
+#
+## Specify HDMI output resolution (eg. extraargs=video=HDMI-A-1:800x480-24@60)
+#extraargs=video=HDMI-A-1:1024x600-24@60
+#
+##### Provided overlays:
+##
+## tft35_spi tft43_spi
+## mcp2515 pad7_vibration ws2812 ir light
+## spidev0_0 spidev1_0 spidev1_1 spidev1_2
+## i2c0 pwm disable_uart0
+##
+#####
+##
+## write the config after the 'overlays' and separate it with a space when multiple functions are enabled
+#overlays=ws2812
+#
+## tft35/tft43 rotate: 0, 90, 180, 270
+#param_fbtft_spi_rotate=0
+#
+## uncomment 'param_gpio_shutdown_pin' & 'param_gpio_shutdown_level' to enable gpio_shutdown feature
+## set the gpio of detect pin
+#param_gpio_shutdown_pin=PC8
+## shutdown level: 0=Falling, 1=Rising
+#param_gpio_shutdown_level=0
+#
+#
+##### Overlay details:
+#
+### tft35_spi / tft43_spi
+## Activates TFT35 (st7796s) / TFT43 (nv3041a) screen.
+## SPI pins: spidev1_1
+## DC pin:
+##   for CB1/Pi1:  PC14(GPIO78)
+##   for CB1-eMMC: PI15(GPIO271)
+## I2C pins: Software_I2C
+#
+### mcp2515
+## Activates MCP2515 (spi to can)
+## SPI pins: spidev1_0
+## IRQ pin:
+##   for CB1/Pi1:  PC9(GPIO73)
+##   for CB1-eMMC: PI3(GPIO259)
+#
+### pad7_vibration
+## Activates Pad7 vibration (led gpio control)
+## vibration pin:
+##   for CB1/Pi1:  PC15(GPIO79)
+##   for CB1-eMMC: PI13(GPIO269)
+#
+### ws2812
+## Activates RGB ws2812.
+## ws2812 pin:
+##   for CB1/Pi1:  PC14(GPIO78)
+##   for CB1-eMMC: PI15(GPIO271)
+#
+### ir
+## Activates IR (Infrared remote) receiver
+## IR pin: PH10(GPIO234)
+#
+### light
+## Activates Pad7 automatically adjusts screen brightness based on ambient light intensity.
+## Ambient light intensity Sensor(I2C): Software_I2C
+## Screen brightness adjustment(PWM): pwm, disable_uart0
+#
+### spidev0_0
+## Activates spi3 with cs0.
+## SPI3 m1 CS0 pins (MOSI, MISO, SCK, CS):
+##     PC2(GPIO66)
+##     PC4(GPIO68)
+##     PC0(GPIO64)
+##     PC3(GPIO67)
+#
+### spidev1_0, spidev1_1, spidev1_2
+## Activates spi1 with cs0, cs1, cs2.
+## SPI1 m1 pins (MOSI, MISO, SCK):
+##     PH7(GPIO231)
+##     PH8(GPIO232)
+##     PH6(GPIO230)
+## CS pins (0, 1, 2):
+##   for CB1/Pi1:
+##     PC11(GPIO75)
+##     PC7(GPIO71)
+##     PC13(GPIO77)
+##   for CB1-eMMC:
+##     PI5(GPIO261)
+##     PI14(GPIO270)
+##     PI7(GPIO263s)
+#
+### i2c0
+## Activates I2C bus 1
+## I2C1 pins (SCL, SDA):
+##     PI5(GPIO261)
+##     PI6(GPIO262)
+#
+## Software_I2C pins (SCL, SDA):
+##   for CB1/Pi1:
+##     PC10(GPIO74)
+##     PC12(GPIO76)
+##   for CB1-eMMC:
+##     PI4(GPIO260)
+##     PI6(GPIO262)
+#
+### pwm
+## Activates PWM driver.
+##     PWM1 pin: PH3(GPIO227)
+##     PWM2 pin: PH2(GPIO226)
+##     PWM3 pin: PH0(GPIO224)
+##     PWM4 pin: PH1(GPIO225)
+##     PWM5 pin: PA12(GPIO12)
+#
+### disable_uart0
+## Disable UART0 console output, these pins can be used for other features.
+## UART0 pins (TX, RX):
+##     PH0(GPIO224)
+##     PH1(GPIO225)
+#
+#####
+#------------------------------------------------#
+#
