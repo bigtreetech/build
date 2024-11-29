@@ -523,6 +523,16 @@ fix_etc_profile_path() {
 	sed -i 's|PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"|PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"|' "${SDCARD}"/etc/profile
 }
 
+install_can0() {
+	cat <<- EOF > "${SDCARD}"/etc/network/interfaces.d/can0
+		allow-hotplug can0
+		iface can0 can static
+		    bitrate 1000000
+		    up ip link set $IFACE txqueuelen 1024
+
+	EOF
+}
+
 install_btt_scripts() {
     mkdir "${SDCARD}"/boot/gcode -p
     cp "${SRC}"/patch/boot/system.cfg ${SDCARD}/boot/system.cfg

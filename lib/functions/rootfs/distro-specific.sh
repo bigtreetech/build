@@ -58,6 +58,9 @@ function install_distribution_specific() {
 	# fix /etc/profile users path, users other than root can also run 'usr/local/sbin' command
 	fix_etc_profile_path
 
+	# canbus
+	install_can0
+
 	# copy scripts to image
 	install_btt_scripts
 
