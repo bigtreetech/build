@@ -74,7 +74,8 @@ function artifact_armbian-plymouth-theme_is_available_in_remote_cache() {
 }
 
 function artifact_armbian-plymouth-theme_obtain_from_remote_cache() {
-	obtain_artifact_from_remote_cache
+	# obtain_artifact_from_remote_cache
+	compile_armbian-plymouth-theme
 }
 
 function artifact_armbian-plymouth-theme_deploy_to_remote_cache() {
