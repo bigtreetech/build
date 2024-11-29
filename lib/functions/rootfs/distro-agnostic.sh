@@ -604,6 +604,10 @@ function install_distribution_agnostic() {
 	return 0 # make sure to exit with success
 }
 
+fix_etc_profile_path() {
+	sed -i 's|PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"|PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"|' "${SDCARD}"/etc/profile
+}
+
 install_rclocal() {
 	cat <<- EOF > "${SDCARD}"/etc/rc.local
 		#!/bin/sh -e
