@@ -57,3 +57,8 @@ unzip
 vnstat
 wget
 wireless-regdb
+net-tools
+sox
+libsox-fmt-all
+avahi-daemon
+fonts-wqy-zenhei
