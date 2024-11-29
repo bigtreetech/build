@@ -55,6 +55,9 @@ function install_distribution_specific() {
 	# remove doubled uname from motd
 	[[ -f "${SDCARD}"/etc/update-motd.d/10-uname ]] && rm "${SDCARD}"/etc/update-motd.d/10-uname
 
+	# fix /etc/profile users path, users other than root can also run 'usr/local/sbin' command
+	fix_etc_profile_path
+
 	# copy scripts to image
 	install_btt_scripts
 
