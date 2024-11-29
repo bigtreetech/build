@@ -75,6 +75,9 @@ function install_distribution_specific() {
 	# remove doubled uname from motd
 	[[ -f "${SDCARD}"/etc/update-motd.d/10-uname ]] && rm "${SDCARD}"/etc/update-motd.d/10-uname
 
+	# copy scripts to image
+	install_btt_scripts
+
 	# rc.local is not existing but one might need it
 	install_rclocal
 
