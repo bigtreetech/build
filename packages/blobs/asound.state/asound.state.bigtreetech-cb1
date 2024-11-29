@@ -1,0 +1,245 @@
+state.HDMI {
+	control.1 {
+		iface MIXER
+		name 'loopback debug'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.2 {
+		iface PCM
+		name 'Playback Channel Map'
+		value.0 0
+		value.1 0
+		value.2 0
+		value.3 0
+		value.4 0
+		value.5 0
+		value.6 0
+		value.7 0
+		comment {
+			access read
+			type INTEGER
+			count 8
+			range '0 - 36'
+		}
+	}
+	control.3 {
+		iface PCM
+		name 'IEC958 Playback Mask'
+		value ffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		comment {
+			access read
+			type IEC958
+			count 1
+		}
+	}
+	control.4 {
+		iface PCM
+		name 'IEC958 Playback Default'
+		value '0400000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+		comment {
+			access 'read write'
+			type IEC958
+			count 1
+		}
+	}
+	control.5 {
+		iface PCM
+		name ELD
+		value '10000600651000010000000000000000061433455443313536097f0700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+		comment {
+			access 'read volatile'
+			type BYTES
+			count 128
+		}
+	}
+}
+state.audiocodec {
+	control.1 {
+		iface MIXER
+		name 'codec hub mode'
+		value hub_disable
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 null
+			item.1 hub_disable
+			item.2 hub_enable
+		}
+	}
+	control.2 {
+		iface MIXER
+		name 'digital volume'
+		value 0
+		comment {
+			access 'read write'
+			type INTEGER
+			count 1
+			range '0 - 63'
+			dbmin -9999999
+			dbmax 4121460
+			dbvalue.0 -9999999
+		}
+	}
+	control.3 {
+		iface MIXER
+		name 'LINEIN to output mixer gain control'
+		value 3
+		comment {
+			access 'read write'
+			type INTEGER
+			count 1
+			range '0 - 7'
+			dbmin -450
+			dbmax 600
+			dbvalue.0 0
+		}
+	}
+	control.4 {
+		iface MIXER
+		name 'FMIN to output mixer gain control'
+		value 4
+		comment {
+			access 'read write'
+			type INTEGER
+			count 1
+			range '0 - 7'
+			dbmin -450
+			dbmax 600
+			dbvalue.0 150
+		}
+	}
+	control.5 {
+		iface MIXER
+		name 'LINEOUT volume'
+		value 31
+		comment {
+			access 'read write'
+			type INTEGER
+			count 1
+			range '0 - 31'
+			dbmin -9999999
+			dbmax 150
+			dbvalue.0 150
+		}
+	}
+	control.6 {
+		iface MIXER
+		name 'LINEOUT Switch'
+		value true
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.7 {
+		iface MIXER
+		name 'Left Output Mixer DACL Switch'
+		value true
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.8 {
+		iface MIXER
+		name 'Left Output Mixer DACR Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.9 {
+		iface MIXER
+		name 'Left Output Mixer FMINL Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.10 {
+		iface MIXER
+		name 'Left Output Mixer LINEINL Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.11 {
+		iface MIXER
+		name 'Right Output Mixer DACL Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.12 {
+		iface MIXER
+		name 'Right Output Mixer DACR Switch'
+		value true
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.13 {
+		iface MIXER
+		name 'Right Output Mixer FMINR Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.14 {
+		iface MIXER
+		name 'Right Output Mixer LINEINR Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.15 {
+		iface MIXER
+		name 'Left LINEOUT Mux'
+		value LOMixer
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 LOMixer
+			item.1 LROMixer
+		}
+	}
+	control.16 {
+		iface MIXER
+		name 'Right LINEOUT Mux'
+		value ROMixer
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 ROMixer
+			item.1 LROMixer
+		}
+	}
+}
