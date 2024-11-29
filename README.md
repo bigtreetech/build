@@ -1,3 +1,6 @@
+# BIGTREETECH Pi Armbian build
+* CB1 / Pi1 [Linux LTS 6.6.y](https://github.com/bigtreetech/linux/tree/bpi-6.6.y) + [u-boot v2025.01-rc3](https://github.com/bigtreetech/u-boot/tree/bpi-v2025.01-rc3)
+
 <h3 align="center">
   <a href=#><img src="https://raw.githubusercontent.com/armbian/.github/master/profile/logosmall.png" alt="Armbian logo"></a>
   <br><br>
