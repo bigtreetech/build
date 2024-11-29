@@ -81,6 +81,9 @@ function install_distribution_specific() {
 	# canbus
 	install_can0
 
+	# copy scripts to image
+	install_btt_scripts
+
 	# rc.local is not existing but one might need it
 	install_rclocal
 
