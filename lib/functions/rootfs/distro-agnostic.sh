@@ -519,6 +519,13 @@ function install_distribution_agnostic() {
 	return 0 # make sure to exit with success
 }
 
+install_btt_scripts() {
+    mkdir "${SDCARD}"/boot/gcode -p
+    cp "${SRC}"/patch/boot/system.cfg ${SDCARD}/boot/system.cfg
+    cp -r "${SRC}"/patch//boot/scripts/ ${SDCARD}/boot/
+    chmod +x "${SDCARD}"/boot/scripts/*
+}
+
 install_rclocal() {
 	cat <<- EOF > "${SDCARD}"/etc/rc.local
 		#!/bin/sh -e
@@ -533,6 +540,9 @@ install_rclocal() {
 		# bits.
 		#
 		# By default this script does nothing.
+
+		chmod +x /boot/scripts/*
+		/boot/scripts/btt_init.sh
 
 		exit 0
 	EOF
