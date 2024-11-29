@@ -618,6 +618,30 @@ install_can0() {
 	EOF
 }
 
+install_btt_scripts() {
+	mkdir "${SDCARD}"/boot/gcode -p
+	cp "${SRC}"/patch/boot/system.cfg "${SDCARD}"/boot/system.cfg
+	cp -r "${SRC}"/patch//boot/scripts/ "${SDCARD}"/boot/
+	chmod +x "${SDCARD}"/boot/scripts/*
+
+	if [[ ! -z $BTT_HOSTNAME ]]; then
+		escape_sed_replacement() {
+			echo "$1" | sed -e 's/[&\/\]/\\&/g' -e "s/'/'\\\\''/g"
+		}
+		safe_hostname=$(escape_sed_replacement "$BTT_HOSTNAME")
+		sed -i -E "s|^#hostname=['\"]BIGTREETECH-CB[^'\"]*['\"]\$|#hostname='$safe_hostname'|i" "${SDCARD}"/boot/system.cfg
+	fi
+
+	if [[ ! -z $BTT_ROOTFS_START ]]; then
+		sed -i -E "s|^ROOTFS_START=532480|ROOTFS_START=$BTT_ROOTFS_START|i" "${SDCARD}"/boot/scripts/extend_fs.sh
+	fi
+
+	if [[ ! -z $BTT_HDMI_AUDIODEV ]]; then
+		sed -i -E "s|^AUDIODEV=hw:1,0|AUDIODEV=$BTT_HDMI_AUDIODEV|i" "${SDCARD}"/boot/scripts/vibrationsound.sh
+		sed -i -E "s|^AUDIODEV=hw:1,0|AUDIODEV=$BTT_HDMI_AUDIODEV|i" "${SDCARD}"/boot/scripts/sound.sh
+	fi
+}
+
 install_rclocal() {
 	cat <<- EOF > "${SDCARD}"/etc/rc.local
 		#!/bin/sh -e
@@ -632,6 +656,9 @@ install_rclocal() {
 		# bits.
 		#
 		# By default this script does nothing.
+
+		chmod +x /boot/scripts/*
+		/boot/scripts/btt_init.sh
 
 		exit 0
 	EOF
