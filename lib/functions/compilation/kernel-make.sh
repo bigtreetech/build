@@ -74,6 +74,8 @@ function run_kernel_make_internal() {
 	full_command=("${KERNEL_MAKE_RUNNER:-run_host_command_logged}" "env" "-i" "${common_make_envs[@]}"
 		make "${common_make_params_quoted[@]@Q}" "$@" "${make_filter}")
 	"${full_command[@]}" # and exit with it's code, since it's the last statement
+
+
 }
 
 function run_kernel_make() {
