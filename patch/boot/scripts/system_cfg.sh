@@ -146,8 +146,8 @@ if [[ ${BTT_PAD7} == "ON" ]]; then
     # Toggle status light color
     sudo /boot/scripts/set_rgb 0x000001 0x000001
 
-    # Automatic brightness adjustment
-    [[ ${AUTO_BRIGHTNESS} == "ON" ]] && /boot/scripts/auto_brightness &
+    # Automatic brightness adjustment, i2c[3] pwmchip[0] pwm[3]
+    [[ ${AUTO_BRIGHTNESS} == "ON" ]] && /boot/scripts/auto_brightness 3 0 3 &
 
     SRC_FILE=/boot/scripts/ks_click.sh
 
