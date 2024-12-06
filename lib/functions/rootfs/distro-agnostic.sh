@@ -528,7 +528,7 @@ install_can0() {
 		allow-hotplug can0
 		iface can0 can static
 		    bitrate 1000000
-		    up ip link set $IFACE txqueuelen 1024
+		    up ip link set \$IFACE txqueuelen 1024
 
 	EOF
 }
