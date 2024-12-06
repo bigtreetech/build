@@ -20,6 +20,9 @@ console=display
 ## uncomment for i2c-gpio, pwm3, disable uart0 for pwm3
 #overlays=light
 
+## uncomment for pad7 vibration motor gpio
+#overlays=pad7_vibration
+
 ## uncomment for TFT35_SPI screen
 #overlays=tft35_spi
 ## tft35 rotate: 0, 90, 180, 270
