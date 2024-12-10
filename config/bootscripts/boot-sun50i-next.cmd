@@ -67,8 +67,10 @@ else
 	fi
 fi
 
+if test "${console}" = "detail"; then setenv consoleargs "console=tty0 console=ttyS0,115200"; fi
 if test "${console}" = "display" || test "${console}" = "both"; then setenv consoleargs "console=ttyS0,115200 console=tty1"; fi
-if test "${console}" = "serial"; then setenv consoleargs "console=ttyS0,115200"; fi
+if test "${console}" = "serial"; then setenv consoleargs "console=tty1"; fi
+if test "${console}" = "cancel_lcd"; then setenv consoleargs "console=ttyS0,115200"; fi
 if test "${bootlogo}" = "true"; then
 	setenv consoleargs "splash plymouth.ignore-serial-consoles ${consoleargs}"
 else
