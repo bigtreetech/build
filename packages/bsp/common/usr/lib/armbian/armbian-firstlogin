@@ -190,7 +190,7 @@ read_password() {
 		fi
 
 		# Handle backspace
-		if [[ $char == $'\177' ]]; then
+		if [[ $char == $'\b' ]]; then
 			if [ $charcount -gt 0 ]; then
 				charcount=$((charcount - 1))
 				prompt=$'\b \b'
