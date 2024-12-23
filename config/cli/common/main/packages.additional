@@ -64,3 +64,5 @@ libsox-fmt-all
 avahi-daemon
 fonts-wqy-zenhei
 ir-keytable
+bluez
+bluez-alsa-utils

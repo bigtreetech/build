@@ -116,8 +116,16 @@ function install_artifact_deb_chroot() {
 	declare apt_options="$2"
 	declare -A -g image_artifacts_debs_reversioned # global associative array
 	declare revisioned_deb_rel_path="${image_artifacts_debs_reversioned["${deb_name}"]}"
+	display_alert "-------------------Alan---------------------"
+	display_alert "|                                          |"
+	display_alert "|                                          |"
+	display_alert "deb_name: ${deb_name}"
+	display_alert "revisioned_deb_rel_path: ${revisioned_deb_rel_path}"
+	display_alert "|                                          |"
+	display_alert "|                                          |"
+	display_alert "-------------------end----------------------"
 	if [[ -z "${revisioned_deb_rel_path}" ]]; then
-		exit_with_error "No revisioned deb path found for '${deb_name}'"
+		exit_with_error "No revisioned deb path found for '${revisioned_deb_rel_path}'"
 	fi
 	display_alert "Installing artifact deb" "${deb_name} :: ${revisioned_deb_rel_path}" "debug"
 	install_deb_chroot "${DEB_STORAGE}/${revisioned_deb_rel_path}" "" "" "${apt_options}"
@@ -127,3 +135,29 @@ function install_artifact_deb_chroot() {
 	image_artifacts_debs_installed["${deb_name}"]="yes"
 	debug_dict image_artifacts_debs_installed
 }
+
+function install_artifact_deb_chroot_alan() {
+	declare deb_name="$1"
+	declare apt_options="$2"
+	declare -A -g image_artifacts_debs_reversioned # global associative array
+	declare revisioned_deb_rel_path="${deb_name}"
+	display_alert "-------------------Alan-test---------------------"
+	display_alert "|                                          |"
+	display_alert "|                                          |"
+	display_alert "deb_name: ${deb_name}"
+	display_alert "revisioned_deb_rel_path: ${revisioned_deb_rel_path}"
+	display_alert "|                                          |"
+	display_alert "|                                          |"
+	display_alert "-------------------end----------------------"
+	if [[ -z "${revisioned_deb_rel_path}" ]]; then
+		exit_with_error "No revisioned deb path found for '${revisioned_deb_rel_path}'"
+	fi
+	display_alert "Installing artifact deb" "${deb_name} :: ${revisioned_deb_rel_path}" "debug"
+	install_deb_chroot "${DEB_STORAGE}/${revisioned_deb_rel_path}" "" "" "${apt_options}"
+
+	# Mark the deb as installed in the global associative array.
+	declare -A -g image_artifacts_debs_installed
+	image_artifacts_debs_installed["${deb_name}"]="yes"
+	debug_dict image_artifacts_debs_installed
+}
+
