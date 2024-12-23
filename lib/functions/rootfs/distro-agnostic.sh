@@ -350,6 +350,9 @@ function install_distribution_agnostic() {
 		chroot_sdcard_apt_get_remove --auto-remove plymouth
 	fi
 
+
+	# install_artifact_deb_chroot_alan "armbian-plymouth-theme_3.0.0-25.02.0-trunk_all__1-Bfe25-R448a.deb"
+
 	# freeze armbian packages
 	if [[ "${BSPFREEZE:-"no"}" == yes ]]; then
 		display_alert "Freezing Armbian packages" "$BOARD" "info"
