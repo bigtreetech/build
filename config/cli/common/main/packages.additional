@@ -56,6 +56,7 @@ unzip
 vnstat
 wget
 wireless-regdb
+vim
 net-tools
 ifupdown
 sox
@@ -63,3 +64,5 @@ libsox-fmt-all
 avahi-daemon
 fonts-wqy-zenhei
 ir-keytable
+bluez
+bluez-alsa-utils

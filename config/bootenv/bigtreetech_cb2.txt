@@ -1,0 +1,223 @@
+verbosity=1
+bootlogo=false
+extraargs=cma=256M
+overlay_prefix=rk3566
+#
+#------------------------------------------------#
+#
+fdtfile=rockchip/rk3566-bigtreetech-cb2.dtb
+#
+## default 'display' for debug, 'serial' for /dev/ttyS2
+console=display
+#
+## Specify HDMI output resolution (eg. extraargs=video=HDMI-A-1:800x480-24@60)
+#extraargs=video=HDMI-A-1:1024x600-24@60
+#
+##### Provided overlays:
+##
+## hdmi dsi tft35_spi tft43_spi
+## mcp2515 pad7_vibration ws2812 ir
+## spidev1_0 spidev1_1 spidev1_2 spidev3_0_m1
+## i2c1 i2c3_m0 i2c4_m0
+## pwm0_m1 pwm1_m0 pwm2_m0 pwm4 pwm5 pwm12_m1 pwm13_m1 pwm14_m1 pwm15_m1
+## uart0_ctsn_rtsn uart0 uart3_m0 uart5_m1 uart7_m2 uart9_m1
+## rtc_pcf8563 rtc_rk808
+## disable_csi disable_imx219 disable_ov5647 disable_pcie disable_uart2
+##
+#####
+#
+## write the config after the 'overlays' and separate it with a space when multiple functions are enabled
+overlays=hdmi
+#
+## tft35/tft43 rotate: 0, 90, 180, 270
+#param_fbtft_spi_rotate=0
+#
+## uncomment 'param_gpio_shutdown_pin' & 'param_gpio_shutdown_level' to enable gpio_shutdown feature
+## set the gpio of detect pin
+#param_gpio_shutdown_pin=GPIO4_C2
+## shutdown level: 0=Falling, 1=Rising
+#param_gpio_shutdown_level=0
+#
+#
+##### Overlay details:
+#
+### dsi
+## Activates DSI, Panel, TouchScreen(ft5406) and LCD backlight,
+#
+### hdmi
+## Activates HDMI, HDMI sound(Audio), Audio channel(i2s0_8ch),
+#
+### tft35_spi / tft43_spi
+## Activates TFT35 (st7796s) / TFT43 (nv3041a) screen.
+## SPI pins: spidev1_1
+## DC pin: GPIO0_C7(gpiochip0/gpio23)
+## I2C pins: i2c3_m0
+#
+### disable_csi
+## Disable CSI, CIF, ISP and Camera sensors(ov5647 & imx219),
+## If we don't use CSI cameras, it will reduce the error messages in the log.
+#
+### disable_imx219
+## Disable Camera sensors(imx219),
+## If we don't use imx219, it will reduce the error messages in the log.
+#
+### disable_ov5647
+## Disable Camera sensors(ov5647),
+## If we don't use ov5647, it will reduce the error messages in the log.
+#
+### disable_pcie
+## Disable pcie,
+## If we don't use pcie devices, it will reduce the error messages in the log.
+#
+### disable_uart2
+## Disable UART2 console output, these pins can be used for other features.
+## UART2 pins (TX, RX):
+##     GPIO0_D1(gpiochip0/gpio25)
+##     GPIO0_D0(gpiochip0/gpio24)
+#
+### i2c1
+## Activates I2C bus 1
+## I2C1 pins (SCL, SDA):
+##     GPIO0_B3(gpiochip0/gpio11)
+##     GPIO0_B4(gpiochip0/gpio12)
+#
+### i2c3_m0
+## Activates I2C bus 3
+## I2C3 m0 pins (SCL, SDA):
+##     GPIO1_A1(gpiochip1/gpio1)
+##     GPIO1_A0(gpiochip1/gpio0)
+#
+### i2c4_m0
+## Activates I2C bus 4
+## I2C4 m0 pins (SCL, SDA):
+##     GPIO4_B3(gpiochip4/gpio11)
+##     GPIO4_B2(gpiochip4/gpio10)
+#
+### ir
+## Activates IR (Infrared remote) receiver
+## IR pin: GPIO0_C2(gpiochip0/gpio18)
+#
+### mcp2515
+## Activates MCP2515 (spi to can)
+## SPI pins: spidev1_0
+## IRQ pin: GPIO4_A3(gpiochip4/gpio3)
+#
+### pad7_vibration
+## Activates Pad7 vibration (led gpio control)
+## vibration pin: GPIO0_C3(gpiochip0/gpio19)
+#
+### pwm0_m1
+## Activates PWM0
+## PWM0 m1 pin: GPIO0_C7(gpiochip0/gpio23)
+#
+### pwm1_m0
+## Activates PWM1
+## PWM1 m0 pin: GPIO0_C0(gpiochip0/gpio16)
+#
+### pwm2_m0
+## Activates PWM2
+## PWM2 m0 pin: GPIO0_C1(gpiochip0/gpio17)
+#
+### pwm4
+## Activates PWM4
+## PWM4 pin: GPIO0_C3(gpiochip0/gpio19)
+#
+### pwm5
+## Activates PWM5
+## PWM5 pin: GPIO0_C4(gpiochip0/gpio20)
+#
+### pwm12_m1
+## Activates PWM12
+## PWM12 m1 pin: GPIO4_C5(gpiochip4/gpio21)
+#
+### pwm13_m1
+## Activates PWM13
+## PWM13 m1 pin: GPIO4_C6(gpiochip4/gpio22)
+#
+### pwm14_m1
+## Activates PWM14
+## PWM14 m1 pin: GPIO4_C2(gpiochip4/gpio18)
+#
+### pwm15_m1
+## Activates PWM15
+## PWM15 m1 pin: GPIO4_C3(gpiochip4/gpio19)
+#
+### rtc_pcf8563
+## Activates RTC(pcf8563)
+## I2C pins: i2c2_m1, share with Camera sensors(ov5647 & imx219), TouchScreen(ft5406) and LCD backlight.
+## I2C2 m1 pins (SCL, SDA):
+##     GPIO4_B5(gpiochip4/gpio13)
+##     GPIO4_B4(gpiochip4/gpio12)
+#
+### rtc_rk808
+## Activates rtc(rk808), pmic(rk809) built-in rtc.
+## I2C pins: i2c0, share with pmic(rk809) and vdd_cpu(tcs4525)
+## I2C0 pins (SCL, SDA):
+##     GPIO0_B1(gpiochip0/gpio9)
+##     GPIO0_B2(gpiochip0/gpio10)
+#
+### spidev1_0, spidev1_1, spidev1_2
+## Activates spi1 with cs0, cs1, cs2.
+## SPI1 m1 pins (MOSI, MISO, SCK):
+##     GPIO3_C1(gpiochip3/gpio17)
+##     GPIO3_C2(gpiochip3/gpio18)
+##     GPIO3_C3(gpiochip3/gpio19)
+## CS pins (0, 1, 2):
+##     GPIO4_C6(gpiochip4/gpio22)
+##     GPIO3_A1(gpiochip3/gpio1)
+##     GPIO0_B0(gpiochip0/gpio8)
+#
+### spidev3_0_m1
+## Activates spi3 with cs0.
+## SPI3 m1 CS0 pins (MOSI, MISO, SCK, CS):
+##     GPIO4_C3(gpiochip4/gpio19)
+##     GPIO4_C5(gpiochip4/gpio21)
+##     GPIO4_C2(gpiochip4/gpio18)
+##     GPIO0_A0(gpiochip0/gpio0)
+#
+### uart0_ctsn_rtsn
+## Activates UART0 with CTSn and RTSn.
+## UART0 pins(TX, RX, CTSn, RTSn):
+##     GPIO0_C1(gpiochip0/gpio17)
+##     GPIO0_C0(gpiochip0/gpio16)
+##     GPIO0_C7(gpiochip0/gpio23)
+##     GPIO0_C4(gpiochip0/gpio20)
+#
+### uart0
+## Activates UART0.
+## UART0 pins(TX, RX):
+##     GPIO0_C1(gpiochip0/gpio17)
+##     GPIO0_C0(gpiochip0/gpio16)
+#
+### uart3_m0
+## Activates UART3.
+## UART3 m0 pins(TX, RX):
+##     GPIO1_A1(gpiochip1/gpio1)
+##     GPIO1_A0(gpiochip1/gpio0)
+#
+### uart5_m1
+## Activates UART5.
+## UART5 m1 pins(TX, RX):
+##     GPIO3_C2(gpiochip3/gpio18)
+##     GPIO3_C3(gpiochip3/gpio19)
+#
+### uart7_m2
+## Activates UART7.
+## UART7 m2 pins(TX, RX):
+##     GPIO4_A2(gpiochip4/gpio2)
+##     GPIO4_A3(gpiochip4/gpio3)
+#
+### uart9_m1
+## Activates UART9.
+## UART9 m1 pins(TX, RX):
+##     GPIO4_C5(gpiochip4/gpio21)
+##     GPIO4_C6(gpiochip4/gpio22)
+#
+### ws2812
+# Activates RGB ws2812.
+# ws2812 pin:
+#    GPIO0_C7(gpiochip0/gpio23)
+#
+#####
+#------------------------------------------------#
+#
