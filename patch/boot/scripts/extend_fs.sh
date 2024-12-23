@@ -29,7 +29,7 @@ y
 w
 EOF
 
-sudo resize2fs /dev/${filelist[$c-1]}
+sudo resize2fs /dev/${filelist[0]}p${ROOT_NUM}
 unset filelist
 
 sudo sed -i '/^.\/extend_fs.sh/s/^/#/' /boot/scripts/btt_init.sh

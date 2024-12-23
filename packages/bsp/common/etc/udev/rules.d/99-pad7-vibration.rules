@@ -1,0 +1,2 @@
+# /sys/class/leds/pad7_vibration/brightness for user group
+ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chgrp video $sys$devpath/brightness", RUN+="/bin/chmod 0666 $sys$devpath/brightness"

@@ -1,0 +1,7 @@
+# /dev/serial/by-id/ for CSI devices
+ACTION=="add", SUBSYSTEM=="video4linux", \
+    KERNEL=="video*", \
+    ATTRS{name}=="rkisp*", \
+    ENV{ID_BUS}="csi", \
+    ENV{ID_SERIAL}="$env{ID_PATH}-$env{ID_V4L_PRODUCT}", \
+    SYMLINK+="v4l/by-id/$env{ID_BUS}-$env{ID_SERIAL}-video-index0"

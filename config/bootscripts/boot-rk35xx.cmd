@@ -25,8 +25,10 @@ fi
 
 if test "${logo}" = "disabled"; then setenv logo "logo.nologo"; fi
 
-if test "${console}" = "display" || test "${console}" = "both"; then setenv consoleargs "console=tty1"; fi
-if test "${console}" = "serial" || test "${console}" = "both"; then setenv consoleargs "console=ttyS2,1500000 ${consoleargs}"; fi
+if test "${console}" = "detail"; then setenv consoleargs "console=tty0 console=ttyS2,1500000"; fi
+if test "${console}" = "display" || test "${console}" = "both"; then setenv consoleargs "console=ttyS2,1500000 console=tty1"; fi
+if test "${console}" = "serial"; then setenv consoleargs "console=tty1"; fi
+if test "${console}" = "cancel_lcd"; then setenv consoleargs "console=ttyS2,1500000"; fi
 if test "${earlycon}" = "on"; then setenv consoleargs "earlycon ${consoleargs}"; fi
 if test "${bootlogo}" = "true"; then
 	setenv consoleargs "splash plymouth.ignore-serial-consoles ${consoleargs}"
@@ -78,8 +80,6 @@ else
 	fi
 fi
 
-echo "Trying 'kaslrseed' command... Info: 'Unknown command' can be safely ignored since 'kaslrseed' does not apply to all boards."
-kaslrseed # @TODO: This gives an error (Unknown command ' kaslrseed ' - try 'help') on many devices since CONFIG_CMD_KASLRSEED is not enabled
 booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}
 
 # Recompile with:

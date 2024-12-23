@@ -76,6 +76,26 @@ function run_kernel_make_internal() {
 	"${full_command[@]}" # and exit with it's code, since it's the last statement
 
 
+	display_alert "\r\n\r\n---------------Alan-Kernel---------------------\r\n" "warn"
+	display_alert "\r\n---common_make_params_quoted:---\r\n" "warn"
+	for env in "${common_make_params_quoted[@]}"; do
+		display_alert "\r\n-0-:[$env]--\r\n"
+	done
+	display_alert "\r\n---common_make_envs:---\r\n" "warn"
+	for env in "${common_make_envs[@]}"; do
+		display_alert "\r\n-1-:[$env]--\r\n"
+	done
+	display_alert "\r\n---full_command:---\r\n" "warn"
+	for env in "${full_command[@]}"; do
+		display_alert "\r\n-2-:[$env]--\r\n"
+	done
+	display_alert "\r\n\r\n---------------Alan-Kernel-make--------------------\r\n" "warn"
+	display_alert "\r\n---full_command:---\r\n" "warn"
+	for env in "${full_command[@]}"; do
+		total="$total $env"
+	done
+	display_alert "[$total] "
+	display_alert "\r\n\r\n---------------End----------------------\r\n" "warn"
 }
 
 function run_kernel_make() {

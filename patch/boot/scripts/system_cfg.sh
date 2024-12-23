@@ -22,34 +22,6 @@ fi
 
 #######################################################
 ks_restart=0
-# TFT35 fbdev
-tft35=0
-FBDEV_CONFIG="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
-grep -e "^ks_src" ${SYSTEM_CFG_PATH} > /dev/null
-STATUS=$?
-if [ ${STATUS} -eq 0 ] && [ ${ks_src} == "TFT35" ]; then
-    tft35=1
-fi
-
-if [ ${tft35} -eq 1 ] && [ ! -e "${FBDEV_CONFIG}" ]; then
-    sudo touch ${FBDEV_CONFIG}
-
-cat > ${FBDEV_CONFIG} <<EOF
-Section "Device"
-        Identifier      "Allwinner A10/A13/A20 FBDEV"
-        Driver          "fbdev"
-        Option          "fbdev" "/dev/fb0"
-        Option          "SwapbuffersWait" "true"
-EndSection
-EOF
-
-    ks_restart=1
-fi
-
-if [ ${tft35} -eq 0 ] && [ -e "${FBDEV_CONFIG}" ]; then
-    sudo rm ${FBDEV_CONFIG}
-    ks_restart=1
-fi
 
 grep -e "^ks_angle" ${SYSTEM_CFG_PATH} > /dev/null
 STATUS=$?
