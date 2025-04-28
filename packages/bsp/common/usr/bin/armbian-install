@@ -828,7 +828,7 @@ check_partitions()
 			UFS_EXCLUDE="${UFS_EXCLUDE} | grep -vE '^${_aux}'"
 		done
 	fi
-	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT | grep -v -w $root_partition_name $INCLUDE $EXCLUDE $UFS_EXCLUDE | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | raid..? / {print \$1}'"
+	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT | grep -v -w $root_partition_name $INCLUDE $EXCLUDE $UFS_EXCLUDE | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | disk | raid..? / {print \$1}'"
 	AvailablePartitions=$(eval $CMD)
 
 	FREE_SPACE=$(sfdisk --list-free /dev/$diskcheck | grep G | tail -1 | awk '{print $4}' | sed "s/G//")
@@ -914,7 +914,7 @@ check_partitions()
 			} | fdisk /dev/$diskcheck &> /dev/null || true
 		fi
 	fi
-	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT,PARTTYPENAME | grep -v -w $root_partition_name $INCLUDE $EXCLUDE $UFS_EXCLUDE | grep Linux | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | raid..? / {print \$1}' | uniq | sed 's|^|/dev/|' | nl | xargs echo -n"
+	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT,PARTTYPENAME | grep -v -w $root_partition_name $INCLUDE $EXCLUDE $UFS_EXCLUDE | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | disk | raid..? / {print \$1}' | uniq | sed 's|^|/dev/|' | nl | xargs echo -n"
 	partprobe
 	AvailablePartitions=$(eval $CMD)
 	PartitionOptions=($AvailablePartitions)
@@ -1109,7 +1109,7 @@ main()
 			3)
 				title="$ichip boot | USB/SATA/NVMe root install"
 				command='Power off'
-				check_partitions
+				check_partitions "mmcblk"
 				show_warning "This script will erase your ${ichip} ($emmccheck)\n    and $DISK_ROOT_PART. Continue?"
 				if [[ -n $emmccheck ]]; then
 					umount_device "$emmccheck"
