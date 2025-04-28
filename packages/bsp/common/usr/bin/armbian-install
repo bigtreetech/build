@@ -676,7 +676,7 @@ check_partitions()
 	IFS=" "
 	[[ -n "$1" ]] && EXCLUDE=" | grep -v $1"
 	[[ -n "$2" ]] && INCLUDE=" | grep $2" && diskcheck=$2
-	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT | grep -v -w $root_partition_name $INCLUDE $EXCLUDE | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | raid..? / {print \$1}'"
+	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT | grep -v -w $root_partition_name $INCLUDE $EXCLUDE | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | disk | raid..? / {print \$1}'"
 	AvailablePartitions=$(eval $CMD)
 
 	FREE_SPACE=$(sfdisk --list-free /dev/$diskcheck | grep G | tail -1 | awk '{print $4}' | sed "s/G//")
@@ -751,7 +751,7 @@ check_partitions()
 			} | fdisk /dev/$diskcheck &> /dev/null || true
 		fi
 	fi
-	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT,PARTTYPENAME | grep -v -w $root_partition_name $INCLUDE $EXCLUDE | grep Linux | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | raid..? / {print \$1}' | uniq | sed 's|^|/dev/|' | nl | xargs echo -n"
+	CMD="lsblk -io KNAME,FSTYPE,SIZE,TYPE,MOUNTPOINT,PARTTYPENAME | grep -v -w $root_partition_name $INCLUDE $EXCLUDE | grep -E '^sd|^nvme|^md|^mmc' | awk -F\" \" '/ part | disk | raid..? / {print \$1}' | uniq | sed 's|^|/dev/|' | nl | xargs echo -n"
 	partprobe
 	AvailablePartitions=$(eval $CMD)
 	PartitionOptions=($AvailablePartitions)
@@ -868,7 +868,7 @@ main()
 
 		[[ -n $sduuid && -n $diskcheck ]]		&& options+=(1 'Boot from SD - system on SATA, USB or NVMe')
 		[[ -n $emmccheck ]] 				&& options+=(2 "Boot from $ichip - system on $ichip")
-		[[ -n $emmccheck && -n $diskcheck ]] 		&& options+=(3 "Boot from $ichip - system on SATA, USB or NVMe")
+		[[ -n $diskcheck ]] 				&& options+=(3 "Boot from NVMe - system on NVMe")
 		[[ -n $mtdcheck ]] 				&& options+=(4 'Boot from MTD Flash - system on SATA, USB or NVMe')
 
 		if [[ -n ${root_partition_device} && ${DEVICE_TYPE} != "uefi" ]]; then
@@ -926,20 +926,14 @@ main()
 				create_armbian "$dest_boot" "$dest_root"
 				;;
 			3)
-				title="$ichip boot | USB/SATA/NVMe root install"
+				title="NVMe boot | NVMe root install"
 				command='Power off'
-				check_partitions
-				show_warning "This script will erase your ${ichip} ($emmccheck)\n    and $DISK_ROOT_PART. Continue?"
-				if [[ -n $emmccheck ]]; then
-					umount_device "$emmccheck"
-					format_emmc "$emmccheck"
-				elif [ -b /dev/nand ]; then
-					umount_device '/dev/nand'
-					format_nand
-				fi
+				nvme=$(lsblk -Al | awk -F" " '/ disk / {print $1}' | grep -E '^nvme' | grep -v "$root_partition_device_name" | grep -v boot)
+				check_partitions "mmcblk" ${nvme}
+				show_warning "This script will erase your $DISK_ROOT_PART. Continue?"
 				umount_device "${DISK_ROOT_PART//[0-9]*/}"
 				format_disk "$DISK_ROOT_PART"
-				create_armbian "$dest_boot" "$DISK_ROOT_PART"
+				create_armbian "$DISK_ROOT_PART" "$DISK_ROOT_PART"
 				;;
 			4)
 				# Espressobin has flash boot by default
