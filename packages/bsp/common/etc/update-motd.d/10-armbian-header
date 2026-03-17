@@ -105,7 +105,7 @@ fi
 
 # Preserve Armbian VERSION; if it ends with "trunk", show "rolling"
 if [[ "${VERSION:-}" == *trunk* ]]; then
-	VERSION="$(printf '%s' "${VERSION}" | cut -d'.' -f1-2)"
+	VERSION="$(printf '%s' "${VERSION}")"
 	VERSION="${VERSION} rolling"
 fi
 
