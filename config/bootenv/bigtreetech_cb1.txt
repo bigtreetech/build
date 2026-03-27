@@ -75,8 +75,8 @@ console=display
 ## Screen brightness adjustment(PWM): pwm, disable_uart0
 #
 ### spidev0_0
-## Activates spi3 with cs0.
-## SPI3 m1 CS0 pins (MOSI, MISO, SCK, CS):
+## Activates spi0 with cs0.
+## SPI0 CS0 pins (MOSI, MISO, SCK, CS):
 ##     PC2(GPIO66)
 ##     PC4(GPIO68)
 ##     PC0(GPIO64)
@@ -84,7 +84,7 @@ console=display
 #
 ### spidev1_0, spidev1_1, spidev1_2
 ## Activates spi1 with cs0, cs1, cs2.
-## SPI1 m1 pins (MOSI, MISO, SCK):
+## SPI1 pins (MOSI, MISO, SCK):
 ##     PH7(GPIO231)
 ##     PH8(GPIO232)
 ##     PH6(GPIO230)
