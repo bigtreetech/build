@@ -1847,7 +1847,7 @@ index 55eda732610b..c26bfb3251b4 100644
  #define sdiohal_pr_perf(fmt, args...) \
  	do { if (sdiohal_log_level & SDIOHAL_PERF_LEVEL) \
 -		pr_info(fmt, ## args); \
-+		trace_printk(fmt, ## args); \
++		pr_info(fmt, ## args); \
  	} while (0)
  #else
  #define sdiohal_normal(fmt, args...)
