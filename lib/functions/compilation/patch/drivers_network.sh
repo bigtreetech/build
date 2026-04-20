@@ -131,6 +131,10 @@ driver_rtl8189FS() {
 		sed -i "s/^CONFIG_RTW_DEBUG.*/CONFIG_RTW_DEBUG = n/" \
 			"$kerneldir/drivers/net/wireless/rtl8189fs/Makefile"
 
+		# Disable dual wlan
+		sed -i "s/^ccflags-y += -DCONFIG_CONCURRENT_MODE/#&/" \
+			"$kerneldir/drivers/net/wireless/rtl8189fs/Makefile"
+
 		process_patch_file "${SRC}/patch/misc/wireless-rtl8189fs-fix-p2p-go-advertising.patch" "applying"
 
 		# fix compilation for kernels >= 5.4
