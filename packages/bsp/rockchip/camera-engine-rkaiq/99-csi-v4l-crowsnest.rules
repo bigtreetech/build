@@ -1,0 +1,13 @@
+# /dev/v4l/by-id/ for CSI devices
+ACTION=="add", SUBSYSTEM=="video4linux", \
+    KERNEL=="video0", \
+    ATTRS{name}=="rkisp*", \
+    ENV{ID_BUS}="csi", \
+    ENV{ID_SERIAL}="$env{ID_PATH}-$env{ID_V4L_PRODUCT}", \
+    SYMLINK+="v4l/by-id/$env{ID_BUS}-$env{ID_SERIAL}-video-index0"
+
+# /dev/v4l/by-path/ for CSI devices
+ACTION=="add", SUBSYSTEM=="video4linux", \
+    KERNEL=="video0", \
+    ATTRS{name}=="rkisp*", \
+    SYMLINK+="v4l/by-path/$env{ID_PATH}-csi-vir-mainsail-usb-video-index0"
