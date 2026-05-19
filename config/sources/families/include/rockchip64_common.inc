@@ -25,6 +25,21 @@ RKBIN_DIR="$SRC/cache/sources/rkbin-tools"
 
 case $BRANCH in
 
+	btt)
+		KERNELSOURCE='https://github.com/bigtreetech/linux-rockchip.git'
+		declare -g KERNEL_MAJOR_MINOR="6.1"    # Major and minor versions of this kernel.
+		declare -g -i KERNEL_GIT_CACHE_TTL=120 # 2 minutes; this is a high-traffic repo
+		KERNELBRANCH='branch:bpi-rk-6.1-rkr5.1-rev2'
+		KERNELPATCHDIR='rk35xx-vendor-6.1'
+		LINUXCONFIG="linux-rk35xx-btt"
+		BOOTSOURCE='https://github.com/bigtreetech/u-boot.git'
+		BOOTBRANCH='branch:bpi-v2026.04'
+		BOOTPATCHDIR='NEED-NOT'
+		BOOTDELAY=-2
+		BOOTENV_FILE='bigtreetech_cb2.txt'
+		KERNEL_DRIVERS_SKIP+=(driver_uwe5622) # patch apply err
+		;;
+
 	current)
 		declare -g KERNEL_MAJOR_MINOR="6.18"
 		declare -g LINUXFAMILY=rockchip64
@@ -139,7 +154,9 @@ case "$BOOT_SOC" in
 		# ROCKUSB_BLOB is used to flash a board with rkdeveloptool (Linux, can use 'rkdevflash' extension) or RKDevTool (Windows) in MASKROM mode
 		ROCKUSB_BLOB="rk35/rk356x_spl_loader_v1.21.113.bin"
 		BOOT_SOC_MKIMAGE="rk3568" # mkimage does not know about rk3566, and rk3568 works.
-		BOOTENV_FILE='rk35xx.txt'
+		if [[ "$BRANCH" != "btt" ]]; then
+			BOOTENV_FILE='rk35xx.txt'
+		fi
 		;;
 
 	rk3568)
