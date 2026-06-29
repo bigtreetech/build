@@ -636,6 +636,26 @@ install_btt_scripts() {
 		sed -i -E "s|^AUDIODEV=hw:1,0|AUDIODEV=$BTT_HDMI_AUDIODEV|i" "${SDCARD}"/boot/scripts/vibrationsound.sh
 		sed -i -E "s|^AUDIODEV=hw:1,0|AUDIODEV=$BTT_HDMI_AUDIODEV|i" "${SDCARD}"/boot/scripts/sound.sh
 	fi
+
+	if [[ ! -z $BTT_KS_SRC_LIST ]]; then
+		ks_src_list=""
+		first_src=""
+		for src in $BTT_KS_SRC_LIST; do
+			item="'$src'"
+
+			if [ -z "$ks_src_list" ]; then
+				ks_src_list="$item"
+				first_src="$item"
+			else
+				ks_src_list="$ks_src_list, $item"
+			fi
+		done
+
+		sed -i \
+			-e "s|^## ks_src: ks_src_list$|## ks_src: $ks_src_list|" \
+			-e "s|^#ks_src=ks_src$|#ks_src=$first_src|" \
+			"${SDCARD}"/boot/system.cfg
+	fi
 }
 
 install_rclocal() {
